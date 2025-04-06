@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plant Disease Detection</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to right, #4CAF50, #2E7D32);
+            color: white;
+            text-align: center;
+            padding: 20px;
+            position: relative;
+        }
+        .container {
+            max-width: 500px;
+            margin: auto;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        }
+        h2 {
+            margin-bottom: 20px;
+        }
+        input[type="file"] {
+            display: none;
+        }
+        .custom-file-upload {
+            background: white;
+            color: #2E7D32;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+        button {
+            background: #FFD700;
+            color: black;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        button:hover {
+            background: #FFC107;
+        }
+        img {
+            max-width: 100%;
+            margin-top: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+        }
+        .result {
+            margin-top: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+        }
+        .about-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: #ffffff;
+            color: #2E7D32;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+            text-decoration: none;
+            transition: background 0.3s;
+        }
+        .about-btn:hover {
+            background-color: #eeeeee;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- About Button -->
+    <a href="{{ url_for('about') }}" class="about-btn">ℹ️ About</a>
+
+    <div class="container">
+        <h2>🌿 Plant Disease Detection 🌿</h2>
+        <form action="/" method="post" enctype="multipart/form-data">
+            <label for="file-upload" class="custom-file-upload">📷 Choose Image</label>
+            <input id="file-upload" type="file" name="file" accept="image/*" required>
+            <br>
+            <button type="submit">🔍 Detect Disease</button>
+        </form>
+        {% if filename %}
+            <div class="result">
+                <h3>📷 Uploaded Image:</h3>
+                <img src="{{ url_for('static', filename='uploads/' + filename) }}" alt="Uploaded Image">
+                <h3>🩺 Prediction: <strong>{{ prediction }}</strong></h3>
+                <p>🎯 Confidence: <strong>{{ confidence|round(2) * 100 }}%</strong></p>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
